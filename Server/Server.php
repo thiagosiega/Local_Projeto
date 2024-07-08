@@ -14,41 +14,10 @@ function conectar_server() {
     return $conexao;
 }
 
-// Verificação de imagens
-function imgs($ID, $imagem) {
-    // Verifica se o arquivo é uma imagem
-    $extensao = pathinfo($imagem['name'], PATHINFO_EXTENSION);
-    $extensoes_permitidas = array('jpg', 'jpeg', 'png', 'gif');
-    
-    // Verificação de extensão de arquivo
-    if (!in_array($extensao, $extensoes_permitidas)) {
-        return "Extensão de arquivo inválida!";
-    }
-    
-    // Aleatoriza o nome da imagem 
-    $novo_nome = md5(uniqid(rand(), true)) . ".$extensao";
-    $diretorio = "../Home/User/$ID/imagens/$novo_nome";
-    
-    // Caso não exista a pasta, cria a pasta
-    if (!file_exists("../Home/User/$ID/imagens/")) {
-        mkdir("../Home/User/$ID/imagens/", 0777, true);
-    }
-    
-    // Move a imagem para a pasta
-    if (!move_uploaded_file($imagem['tmp_name'], $diretorio)) {
-        return "Erro ao mover a imagem!";
-    }
-    
-    return $novo_nome;
-}
 
 // Função de cadastro de usuário
 function Cadastrar_user($nome, $email, $senha, $sexo, $dataNascimento, $Img, $niki) {
-    #Nome    Email    Senha    Sexo    ID    Img_Perfil    Data_naci    Certificado    Niki
     $conexao = conectar_server();
-    
-    // Criptografa a senha
-    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
     // Verifica se o email já está cadastrado
     $stmt = $conexao->prepare("SELECT * FROM user_local WHERE Email = ?");
@@ -59,7 +28,7 @@ function Cadastrar_user($nome, $email, $senha, $sexo, $dataNascimento, $Img, $ni
     if ($resultado->num_rows > 0) {
         return "Email já cadastrado!";
     }
-    
+
     // Verifica se o niki já está cadastrado
     $stmt = $conexao->prepare("SELECT * FROM user_local WHERE Niki = ?");
     $stmt->bind_param("s", $niki);
@@ -79,15 +48,21 @@ function Cadastrar_user($nome, $email, $senha, $sexo, $dataNascimento, $Img, $ni
         $resultado = $stmt->get_result();
     } while ($resultado->num_rows > 0);
 
-    // Verifica se a imagem foi enviada
-    if ($Img != "") {
-        $novo_nome = imgs($ID, $_FILES['imagem']);
-        if (strpos($novo_nome, 'Erro') !== false) {
-            return $novo_nome;
+    // Verifica se o campo de imagem não está vazio
+    if ($Img && $Img['error'] === UPLOAD_ERR_OK) {
+        $nomeArquivo = $Img['name'];
+        //aleatoriza o nome do arquivo
+        $extensao = pathinfo($nomeArquivo, PATHINFO_EXTENSION);
+        $nomeArquivo = md5(uniqid()) . ".$extensao";
+        $caminho = "../Home/User/$ID/Imgs/";
+        if (!file_exists($caminho)) {
+            mkdir($caminho, 0777, true);
         }
-        $Img = $novo_nome;
+        // Move a imagem para a pasta
+        move_uploaded_file($Img['tmp_name'], $caminho . $nomeArquivo);
+        $Img_Perfil = $nomeArquivo;
     } else {
-        $Img = "Default.png";
+        $Img_Perfil = "Default.png"; // Imagem padrão caso não seja enviada nenhuma imagem
     }
 
     // Gera um certificado aleatório de 10 dígitos
@@ -99,13 +74,14 @@ function Cadastrar_user($nome, $email, $senha, $sexo, $dataNascimento, $Img, $ni
         $resultado = $stmt->get_result();
     } while ($resultado->num_rows > 0);
 
+    // Insere os dados no banco de dados
     $stmt = $conexao->prepare("INSERT INTO user_local (Nome, Email, Senha, Sexo, ID, Img_Perfil, Data_naci, Certificado, Niki) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssisiss", $nome, $email, $senha_hash, $sexo, $ID, $Img, $dataNascimento, $certificado, $niki);
+    $stmt->bind_param("ssssisiss", $nome, $email, $senha, $sexo, $ID, $Img_Perfil, $dataNascimento, $certificado, $niki);
     
     if ($stmt->execute()) {
-        return true;
+        return true; // Retorna verdadeiro se o cadastro for bem-sucedido
     } else {
-        return "Erro ao cadastrar o usuário: " . $stmt->error;
+        return "Erro ao cadastrar o usuário: " . $stmt->error; // Retorna mensagem de erro se ocorrer algum problema
     }
 }
 
@@ -129,15 +105,25 @@ function Login($email, $senha) {
     }
     
     session_start();
-    $_SESSION['ID'] = $usuario['ID'];
-    $_SESSION['Nome'] = $usuario['Nome'];
-    $_SESSION['Email'] = $usuario['Email'];
-    $_SESSION['Sexo'] = $usuario['Sexo'];
-    $_SESSION['Img_Perfil'] = $usuario['Img_Perfil'];
-    $_SESSION['Data_naci'] = $usuario['Data_naci'];
-    $_SESSION['Niki'] = $usuario['Niki'];
-    
+    $_SESSION['ID'] = $usuario['ID'];    
     return true;
+}
+
+function infor_funcionario ($ID){
+    $conexao = conectar_server();
+    $stmt = $conexao->prepare("SELECT * FROM user_local WHERE ID = ?");
+    $stmt->bind_param("i", $ID);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $mail = $resultado['Email'];
+    $nome = $resultado['Nome'];
+    $niki = $resultado['Niki'];
+    $sexo = $resultado['Sexo'];
+    $data = $resultado['Data_naci'];
+    $img = $resultado['Img_Perfil'];
+
+    return array($mail, $nome, $niki, $sexo, $data, $img);
+
 }
 
 ?>

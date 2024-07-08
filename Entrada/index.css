@@ -64,6 +64,10 @@ body {
 .Box form button:hover {
     background-color: #3f0b5f; /* Roxo mais escuro */
 }
+.Box input[type="imagem"] {
+    display: none;
+    background-color: black;
+}
 
 .Box a {
     color: #ce93d8; /* Roxo claro */
