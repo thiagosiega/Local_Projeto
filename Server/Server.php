@@ -1,5 +1,6 @@
 <?php
 
+// Função de conexão com o servidor
 function conectar_server() {
     $servidor = "localhost";
     $usuario = "root";
@@ -41,6 +42,7 @@ function imgs($ID, $imagem) {
     return $novo_nome;
 }
 
+// Função de cadastro de usuário
 function Cadastrar_user($nome, $email, $senha, $sexo, $dataNascimento, $Img, $niki) {
     #Nome    Email    Senha    Sexo    ID    Img_Perfil    Data_naci    Certificado    Niki
     $conexao = conectar_server();
@@ -101,9 +103,41 @@ function Cadastrar_user($nome, $email, $senha, $sexo, $dataNascimento, $Img, $ni
     $stmt->bind_param("ssssisiss", $nome, $email, $senha_hash, $sexo, $ID, $Img, $dataNascimento, $certificado, $niki);
     
     if ($stmt->execute()) {
-        return "Usuário cadastrado com sucesso!";
+        return true;
     } else {
         return "Erro ao cadastrar o usuário: " . $stmt->error;
     }
 }
+
+// Função de login
+function Login($email, $senha) {
+    $conexao = conectar_server();
+    
+    $stmt = $conexao->prepare("SELECT * FROM user_local WHERE Email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    
+    if ($resultado->num_rows == 0) {
+        return "Email não cadastrado!";
+    }
+    
+    $usuario = $resultado->fetch_assoc();
+    
+    if (!password_verify($senha, $usuario['Senha'])) {
+        return "Senha incorreta!";
+    }
+    
+    session_start();
+    $_SESSION['ID'] = $usuario['ID'];
+    $_SESSION['Nome'] = $usuario['Nome'];
+    $_SESSION['Email'] = $usuario['Email'];
+    $_SESSION['Sexo'] = $usuario['Sexo'];
+    $_SESSION['Img_Perfil'] = $usuario['Img_Perfil'];
+    $_SESSION['Data_naci'] = $usuario['Data_naci'];
+    $_SESSION['Niki'] = $usuario['Niki'];
+    
+    return true;
+}
+
 ?>
