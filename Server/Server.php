@@ -1,5 +1,6 @@
 <?php
 
+
 // Função de conexão com o servidor
 function conectar_server() {
     $servidor = "localhost";
@@ -13,7 +14,6 @@ function conectar_server() {
     }
     return $conexao;
 }
-
 
 // Função de cadastro de usuário
 function Cadastrar_user($nome, $email, $senha, $sexo, $dataNascimento, $Img, $niki) {
@@ -109,20 +109,19 @@ function Login($email, $senha) {
     return true;
 }
 
+
 function infor_funcionario ($ID){
     $conexao = conectar_server();
     $stmt = $conexao->prepare("SELECT * FROM user_local WHERE ID = ?");
     $stmt->bind_param("i", $ID);
     $stmt->execute();
     $resultado = $stmt->get_result();
-    $mail = $resultado['Email'];
-    $nome = $resultado['Nome'];
-    $niki = $resultado['Niki'];
-    $sexo = $resultado['Sexo'];
-    $data = $resultado['Data_naci'];
-    $img = $resultado['Img_Perfil'];
 
-    return array($mail, $nome, $niki, $sexo, $data, $img);
+    if ($resultado->num_rows == 0) {
+        return "Usuário não encontrado!";
+    }else{
+        return $resultado->fetch_assoc();
+    }
 
 }
 

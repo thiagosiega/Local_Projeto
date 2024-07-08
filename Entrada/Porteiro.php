@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     echo "<script>alert('$resposta');</script>";
                 }
             } else {
-                echo "<script>alert('Login realizado com sucesso!'); window.location.href = 'Home/Entada.php';</script>";
+                echo "<script>alert('Login realizado com sucesso!'); window.location.href = '../Home/Entrada.php';</script>";
             }
         } else {
             echo "<script>alert('Por favor, preencha todos os campos.'); window.location.href = 'login.html';</script>";
