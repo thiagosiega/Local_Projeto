@@ -1,0 +1,78 @@
+/* index.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #7724e4; /* Lilás claro */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.Container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.Box {
+    background-color: #9c27b0; /* Roxo */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: white;
+    max-width: 400px;
+    width: 100%;
+}
+
+.Box h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.Box form input,
+.Box form select {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.Box form input[type="file"] {
+    border: none;
+    background-color: #f3e5f5; /* Lilás claro */
+    padding: 10px;
+}
+
+.Box form button {
+    background-color: #7b1fa2; /* Roxo escuro */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.Box form button:hover {
+    background-color: #3f0b5f; /* Roxo mais escuro */
+}
+
+.Box a {
+    color: #ce93d8; /* Roxo claro */
+    text-decoration: none;
+    display: block;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.Box a:hover {
+    text-decoration: underline;
+}

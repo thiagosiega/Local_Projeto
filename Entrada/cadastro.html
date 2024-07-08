@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+    </style>
+</head>
+<body>
+    <div class="Container">
+        <div class="Box">
+            <h1>Cadastro</h1>
+            <form action="cadastro.php" method="POST">
+                <input type="hidden" name="action" value="cadastro">
+                <input type="text" name="nome" placeholder="Nome" required>
+                <input type="text" name="niki" placeholder="Niki" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="senha" placeholder="Senha" required>
+                <input type="password" name="confirmarSenha" placeholder="Confirmar Senha" required>
+                <select name="sexo" required>
+                    <option value="M">Maculino</option>
+                    <option value="F">Feminino</option>
+                    <option value="O">Outro</option>
+                </select>
+                <input type="date" name="dataNascimento" required>
+                <input type="file" name="imagem" accept="image/*">
+                <button type="submit">Cadastrar</button>
+            </form>
+            <a href="login.php">Já tem uma conta? Faça login</a>
+        </div>
+    </div>
+    
+</body>
+</html>
