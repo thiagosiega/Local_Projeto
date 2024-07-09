@@ -124,4 +124,18 @@ function infor_usuario ($ID){
 
 }
 
+function Achar_certificado($certificado){
+    $conexao = conectar_server();
+    //pega penas o ID
+    $stmt = $conexao->prepare("SELECT ID FROM user_local WHERE Certificado = ?");
+    $stmt->bind_param("i", $certificado);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    if ($resultado->num_rows == 0) {
+        return "Certificado não encontrado!";
+    }else{
+        return $resultado->fetch_assoc();
+    }
+}
+
 ?>

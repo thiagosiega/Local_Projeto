@@ -17,7 +17,7 @@ if ($infor == "Usuário não encontrado!") {
 
 $Img_perfil = htmlspecialchars($infor['Img_Perfil']);
 if ($Img_perfil == "Default.png") {
-    $Img_perfil = "User/Defaut/Defalt.png";
+    $Img_perfil = "User/Default/imagens/Default.png";
 }else {
     $Img_perfil = "User/". $ID ."/Imgs/". $Img_perfil;
 }

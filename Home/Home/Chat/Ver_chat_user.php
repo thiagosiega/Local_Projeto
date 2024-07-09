@@ -25,9 +25,9 @@ function ver_chat($ID) {
 
         $chatNome = htmlspecialchars($chat['Nome']);
         echo "<div class='Chat_php'>";
-        echo "<from action='Chat/Chat.php' method='get'>";
+        echo "<form action='Chat/Chat.php' method='get'>";
         echo "<button type='submit' name='Chat' value='$chatNome'>$chatNome</button>";
-        echo "</from>";
+        echo "</form>";
         echo "</div>";}
 }
 ?>

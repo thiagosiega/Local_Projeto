@@ -10,7 +10,7 @@ require_once '../../Server/Server.php';
 $infor = infor_usuario($ID);
 $Img_perfil = $infor['Img_Perfil'];
 if ($Img_perfil == "Default.png") {
-    $Img_perfil = "../User/Default/Default.png"; // Imagem padrão caso não seja enviada nenhuma imagem
+    $Img_perfil = "../User/Default/imagens/Default.png"; // Imagem padrão caso não seja enviada nenhuma imagem
 } else {
     $Img_perfil = "../User/" . $ID . "/Imgs/" . $Img_perfil;
 }
@@ -58,8 +58,6 @@ if ($Img_perfil == "Default.png") {
                 ver_chat($ID)                
                 ?>
             </div>
-           
-                
         </div>
     </div>
 </body>
