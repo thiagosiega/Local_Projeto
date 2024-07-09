@@ -5,13 +5,14 @@ if (!isset($_SESSION['ID'])) {
     exit;
 }
 
+$ID = $_SESSION['ID'];
 require_once '../../Server/Server.php';
-$infor = infor_funcionario($_SESSION['ID']);
+$infor = infor_usuario($ID);
 $Img_perfil = $infor['Img_Perfil'];
 if ($Img_perfil == "Default.png") {
     $Img_perfil = "../User/Default/Default.png"; // Imagem padrão caso não seja enviada nenhuma imagem
 } else {
-    $Img_perfil = "../User/" . $_SESSION['ID'] . "/Imgs/" . $Img_perfil;
+    $Img_perfil = "../User/" . $ID . "/Imgs/" . $Img_perfil;
 }
 ?>
 
@@ -22,12 +23,7 @@ if ($Img_perfil == "Default.png") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Olá <?php echo htmlspecialchars($infor['Nome']); ?></title>
     <link rel="stylesheet" href="../Sidebar/Sidebar.css">
-    <style>
-        .container {
-            margin-left: 10px;
-            transition: margin-left 0.3s ease; /* Smooth transition */
-        }
-    </style>
+    <link rel="stylesheet" href="Home.css">
 </head>
 <body>
     <div class="Sidebar" id="sidebar">
@@ -46,8 +42,25 @@ if ($Img_perfil == "Default.png") {
     </div> 
     <script src="../Sidebar/Siedebar.js"></script>
     <div class="container">
-        <h1>Olá <?php echo htmlspecialchars($infor['Nome']); ?></h1>
-        <p>Seja bem-vindo ao sistema!</p>
+        <div class="box">
+            <h2>Seus Chats!</h2>
+            <div class="Chats_local">
+                <div class= "Add_chat">
+                    <form action="Chat/Add_chat.php" method="post">
+                        <input type="text" name="Nome" placeholder="Nome do chat">
+                        <button type="submit">Adicionar</button>
+                    </form>
+                </div>
+                <h3>Seus chats</h3>
+                <a href="Chat/Chat.php?Chat=Global">Chat Global</a>
+                <?php
+                include "Chat/Ver_chat_user.php";
+                ver_chat($ID)                
+                ?>
+            </div>
+           
+                
+        </div>
     </div>
 </body>
 </html>

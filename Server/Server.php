@@ -109,7 +109,7 @@ function Login($email, $senha) {
     return true;
 }
 
-function infor_funcionario ($ID){
+function infor_usuario ($ID){
     $conexao = conectar_server();
     $stmt = $conexao->prepare("SELECT * FROM user_local WHERE ID = ?");
     $stmt->bind_param("i", $ID);

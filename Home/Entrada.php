@@ -8,7 +8,7 @@ if (!isset($_SESSION['ID'])) {
 
 include_once '../Server/Server.php';
 $ID = $_SESSION['ID'];
-$infor = infor_funcionario($ID);
+$infor = infor_usuario($ID);
 if ($infor == "Usuário não encontrado!") {
     echo "<script>alert('Usuário não encontrado!');</script>";
     echo "<a href='Entrada/login.html'>Voltar</a>";

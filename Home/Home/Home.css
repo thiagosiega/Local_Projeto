@@ -1,0 +1,112 @@
+.container {
+    margin-left: 10px;
+    margin-right: 20px;
+    transition: margin-left 0.3s ease; /* Smooth transition */
+}
+
+.container .box {
+    width: 100%;
+    height: 100%;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container .box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container .box .Chats_local {
+    width: auto;
+    height: 200px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.Chats_local a{
+    display:block;
+    margin-left: 18%;
+    height: 30px;
+    width: 100vh;
+    background-color: aqua;
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 10px;
+    text-decoration: none;
+    color: black;
+}
+.Chats_local a:hover{
+    background-color: #2f17b4;
+}
+
+.container .box .Chats_local .Add_chat {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .box .Chats_local .Add_chat input[type="text"] {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.container .box .Chats_local .Add_chat button {
+    width: 100px;
+    height: 30px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.container .box .Chats_local .Add_chat button:hover {
+    background-color: #e1e1e1;
+}
+
+.container .box .Chats_local h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.container .box .clat_amigo {
+    width: 100%;
+    height: 200px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.Chat_php {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 20px;
+    background-color: #080101;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(133, 33, 33, 0.466);
+    margin-bottom: 20px;
+}
+.Chat_php button {
+    width: 300px;
+    height: 20px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+
+
