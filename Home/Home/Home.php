@@ -52,7 +52,7 @@ if ($Img_perfil == "Default.png") {
                     </form>
                 </div>
                 <h3>Seus chats</h3>
-                <a href="Chat/Chat.php?Chat=Global">Chat Global</a>
+                <a href="Chat/Chat.php?Chat=Global_chat">Chat Global</a>
                 <?php
                 include "Chat/Ver_chat_user.php";
                 ver_chat($ID)                

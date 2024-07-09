@@ -18,12 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Certificado do chat para encontrar o dono do chat
     $Certificado = $_POST['Certificado'];
     $Infor_dono = Achar_certificado($Certificado);
+    $ID_dono = $Infor_dono['ID'];
     
     if ($ChatNome == "Global_chat") {
         $ID_dono = "Global_chat";
-    } else {
-        $ID_dono = $Infor_dono['ID'];
-    }
+    } 
 
     if ($ID_dono === "Certificado não encontrado!") {
         echo "<script>alert('Certificado não encontrado!')</script>";

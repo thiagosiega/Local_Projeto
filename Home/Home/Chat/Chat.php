@@ -9,8 +9,11 @@ session_start();
 
 $ChatNome = htmlspecialchars($_GET['Chat']); // Nome do chat
 $ID = $_SESSION['ID'];
-if ($ChatNome == "Global") {
+//verifica se o chat e o global
+if ($ChatNome == "Global_chat") {
     $CaminhoChat = "../../User/Global_chat/Global_chat.json";
+} else {
+    $CaminhoChat = "../../User/$ID/Chats/$ChatNome.json";
 }
 
 if (!file_exists($CaminhoChat)) {
@@ -179,32 +182,35 @@ if ($Img_perfil == "Default.png") {
             <h2><?php echo $ChatNome; ?></h2>
             <div class="mensagens">
             <?php
-                // Verifica se há mensagens no chat
-                if (isset($Chat['Mensagens']) && is_array($Chat['Mensagens']) && count($Chat['Mensagens']) > 0) {
-                    echo "<ul>";
-                    // Percorre as mensagens do chat
-                    foreach ($Chat['Mensagens'] as $mensagem) {
-                        $autor = htmlspecialchars($mensagem['Autor']);
-                        $texto = htmlspecialchars($mensagem['Texto']);
-                        $info_user = infor_usuario($autor);
-                        $img_perfil = $info_user['Img_Perfil'];
-                        if ($img_perfil == "Default.png") {
-                            $img_perfil = "../../User/Default/imagens/Default.png"; // Imagem padrão caso não seja enviada nenhuma imagem
-                        } else {
-                            $img_perfil = "../../User/$autor/Imgs/$img_perfil";
-                        }
-                        // Se o autor for igual ao ID do usuário logado, inverte o lado da mensagem
-                        $mensagem_class = ($autor == $ID) ? 'mensagem-autor' : 'mensagem-outro';
-                        echo "<li class='$mensagem_class'>";
-                        echo "<img src='$img_perfil' alt='Imagem de perfil'>";
-                        echo "<p>$texto</p>";
-                        echo "</li>";
-                    }
-                    echo "</ul>";
+            // Exibe as mensagens do chat
+            foreach ($ChatMensagens as $mensagem) {
+                //define a imagem de cada mensagem
+                $autor = $mensagem['Autor'];
+                echo "<script>console.log('$autor')</script>";
+                $infor = infor_usuario($autor);
+                $Img_perfil = $infor['Img_Perfil'];
+                if ($Img_perfil == "Default.png") {
+                    $Img_perfil = "../../User/Default/imagens/Default.png"; // Imagem padrão caso não seja enviada nenhuma imagem
                 } else {
-                    echo "<p>Não há mensagens neste chat.</p>";
+                    $Img_perfil = "../../User/$autor/Imgs/$Img_perfil";
                 }
-                ?>
+                echo "<script>console.log('$Img_perfil')</script>";
+                $mensagem_texto = $mensagem['Texto'];
+                if ($autor == $ID) {
+                    echo "<div class='mensagem-autor'>";
+                    echo "<img src='$Img_perfil' alt='Imagem de perfil'>";
+                    echo "<p>$mensagem_texto</p>";
+                    echo "</div>";
+                } else {
+                    echo "<div class='mensagem-outro'>";
+                    echo "<img src='$Img_perfil' alt='Imagem de perfil'>";
+                    echo "<p>$mensagem_texto</p>";
+                    echo "</div>";
+                }
+
+            }
+            ?>
+
             </div>
             <form action="Enviar_mensagem.php" method="post">
                 <input type="hidden" name="Chat" value="<?php echo $ChatNome; ?>">
